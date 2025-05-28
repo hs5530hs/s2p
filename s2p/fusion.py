@@ -46,7 +46,7 @@ def merge_n(output, inputs, offsets, averaging='average_if_close', threshold=1):
     x = np.empty((h, w, len(inputs)))
     for i, img in enumerate(inputs):
         with rasterio.open(img, 'r') as f:
-            x[:, :, i] = f.read(1) - offsets[i]
+            x[:, :, i] = f.read(1) - np.mean(offsets)
         if cfg['debug']:
             common.rasterio_write('{}_registered.tif'.format(os.path.splitext(img)[0]),
                                   x[:, :, i] + np.mean(offsets))
